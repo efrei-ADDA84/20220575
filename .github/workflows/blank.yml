@@ -21,12 +21,9 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
     - name: Build and push Docker image
-      uses: azure/docker@v1
-      with:
-        context: .
-        dockerfile: Dockerfile
-        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/20220575:v1
-        includeLatestTag: true
+      run: |
+        docker build -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/20220575:v1 .
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/20220575:v1
         
     - name: Deploy to Azure Container Instance
       uses: azure/aci-deploy@v1
