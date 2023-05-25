@@ -20,20 +20,20 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build and push Docker image
-        uses: azure/docker@v1
-        with:
-          context: .
-          dockerfile: Dockerfile
-          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/20220575:v1
-          includeLatestTag: true
-          
-      - name: Deploy to Azure Container Instance
-        uses: azure/aci-deploy@v1
-        with:
-          resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: devops-20220575
-          azure-container-registry: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          azure-container-name: 20220575
-          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/20220575:v1
-          location: francecentral
+    - name: Build and push Docker image
+      uses: azure/docker@v1
+      with:
+        context: .
+        dockerfile: Dockerfile
+        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/20220575:v1
+        includeLatestTag: true
+        
+    - name: Deploy to Azure Container Instance
+      uses: azure/aci-deploy@v1
+      with:
+        resource-group: ${{ secrets.RESOURCE_GROUP }}
+        dns-name-label: devops-20220575
+        azure-container-registry: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        azure-container-name: 20220575
+        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/20220575:v1
+        location: francecentral
