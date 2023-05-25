@@ -10,8 +10,8 @@ def get_weather_by_lat_lon():
     api_endpoint = 'https://api.openweathermap.org/data/2.5/weather'
     lat = request.args.get('lat')
     lon = request.args.get('lon')
-    # api_key = os.getenv('API_KEY')
-    api_key="0c2ace307e116ae0bd296d4bb1063e8f"
+    api_key = os.getenv('API_KEY')
+    # api_key="0c2ace307e116ae0bd296d4bb1063e8f"
     try:
         params = {'lat': lat,
                   'lon': lon,
