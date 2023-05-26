@@ -30,10 +30,6 @@ jobs:
         docker build -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/20220575:v1 .
         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/20220575:v1
 
-    - name: Set up environment variables
-      run: |
-        echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
-        
     - name: 'Deploy to Azure Container Instances'
       uses: 'azure/aci-deploy@v1'
       with:
@@ -47,4 +43,5 @@ jobs:
         ports:
           8081
         location: 'germany west central'
-        # environement
+        environment-variables: |
+            API_KEY=${{ secrets.API_KEY }}
