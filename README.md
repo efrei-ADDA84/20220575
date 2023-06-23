@@ -2,7 +2,7 @@
 
 Ce rapport présente étape par étape du processus de déploiement et met en évidence les avantages de l'utilisation de Terraform pour le déploiement de ressources cloud par rapport à la CLI ou à l'UI.
 
-## Les étapes
+## Etapes
 
 ### 1. Configuration du fournisseur
 La configuration du fournisseur est définie sur "azurerm", ce qui indique l'utilisation du fournisseur Azure pour Terraform.
@@ -24,56 +24,57 @@ Deux sources de données sont définies pour récupérer des informations sur le
 ### 6. Sortie
 Le bloc `output` définit une variable de sortie "public_ip_address" qui capture l'adresse IP publique de la machine virtuelle déployée.
 
-## Le lancement et le résultat
+## Lancement
 
 L'ordre des commandes à lancer :
 
-### Se connecter à l'Azure
+### 1. Se connecter à l'Azure
 ```
 az login
 ```
 Cette commande permet d'accéder et de gérer les ressources d'un abonnement actif de l'utilisateur.
 
-### Initialiser un nouveau répertoire Terraform
+### 2. Initialiser un nouveau répertoire Terraform
 ```
 terraform init
 ```
 Cette commande vérifie et télécharge les fournisseurs de ressources spécifiés dans les fichiers de configuration Terraform
 
-###  Générer un plan d'exécution
+###  3. Générer un plan d'exécution
 ```
 terraform plan
 ```
 Cette commande analyse les fichiers de configuration et compare l'état actuel de l'infrastructure avec l'état souhaité défini dans ces fichiers. Le plan affiche les actions que Terraform prévoit de prendre pour atteindre l'état souhaité, telles que la création, la mise à jour ou la suppression de ressources.
 
-### Appliquer les changements requis pour atteindre l'état souhaité de l'infrastructure
+### 4. Appliquer les changements requis pour atteindre l'état souhaité de l'infrastructure
 ```
 terraform apply
 ```
 Cette commande exécute le plan généré précédemment et demande une confirmation avant d'apporter les modifications. Une fois confirmée, Terraform déploie ou met à jour les ressources selon les spécifications définies dans les fichiers de configuration.
 
-### Récupérer l'output
+### 5. Récupérer l'output
 ```
 terraform output
 ```
 Cette commande affiche les outputs définies dans la configuration, ici l'adresse IP publique. Les outputs sont des valeurs calculées ou récupérées à partir de l'état des ressources après l'exécution de `terraform apply`.
 
-### Etablir une connexion SSH avec la machine virtuelle déployée
+### 6. Etablir une connexion SSH avec la machine virtuelle déployée
 ```
 ssh -i id_rsa devops@{public_ip_address} cat /etc/os-release
 ```
 Après avoir remplacé le champ "public_ip_address" par l'output précédent, en utilisant la clé privée spécifiée, cette commande affiche ensuite le contenu du fichier /etc/os-release sur la machine virtuelle. Cela permet de vérifier quelle version du système d'exploitation est installée sur la machine virtuelle.
 
 Voici le résultat :
+
 ![ssh result](ssh-result.png)
 
-### Détruire l'infrastructure déployée
+### 7. Détruire l'infrastructure déployée
 ```
 terraform destroy
 ```
 Cette commande annule toutes les ressources créées en supprimant toutes les ressources gérées dans le fichier d'état.
 
-## L'tilisation de Terraform
+## Utilisation de Terraform
 Terraform a été choisi comme outil de déploiement des ressources Azure parce qu'elle a plus d'avantages que la CLI ou l'UI :
 
 1. **IaC** : Offrir les avantages du contrôle de version, de la collaboration et de la reproductibilité.
